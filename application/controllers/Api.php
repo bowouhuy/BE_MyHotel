@@ -12,24 +12,21 @@ class Api extends RestController {
         parent::__construct();
         $this->load->model('Users');
         $this->load->model('Objek');
-
-        if (isset($_SERVER['HTTP_ORIGIN'])) {
-            // Decide if the origin in $_SERVER['HTTP_ORIGIN'] is one
-            // you want to allow, and if so:
-            header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
-            header('Access-Control-Allow-Credentials: true');
-            header('Access-Control-Max-Age: 86400');    // cache for 1 day
-        }
+        Header('Access-Control-Allow-Origin: *'); //for allow any domain, insecure
+        Header('Access-Control-Allow-Headers: *'); //for allow any headers, insecure
+        Header('Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE'); //method allowed
     }
 
     public function login_post(){
-        $email = $this->input->post('email');
-        $password = $this->input->post('password');
+        // print_r($this->input->raw_input_stream);exit;
+        $email = $this->post('user_mail');
+        $password = $this->post('user_password');
         $where = array(
             'user_mail' => $email,
             'user_password' => md5($password)
             );
-        $result = $this->Users->login($where)->result_array();
+        // print_r($where);exit;
+        $result = $this->Users->login($where)->row_array();
         if($result != null){
             
             $this->response( [
@@ -48,10 +45,10 @@ class Api extends RestController {
     
     public function register_post(){
 
-        $nama = $this->input->post('nama');
-        $email = $this->input->post('email');
-        $password = $this->input->post('password');
-        $role = $this->input->post('role');
+        $nama = $this->post('user_nama');
+        $email = $this->post('user_mail');
+        $password = $this->post('user_password');
+        $role = 2;
 
         $data = array(
             'user_nama' => $nama,
