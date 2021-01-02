@@ -1,0 +1,59 @@
+CREATE TABLE user(
+	user_id VARCHAR (20) NOT NULL,
+	user_nama VARCHAR (50) NOT NULL,
+	user_mail VARCHAR(100) NOT NULL,
+	user_password VARCHAR(100) NOT NULL,
+	user_role VARCHAR(100) NOT NULL,
+	created_at DATETIME NOT NULL,
+	updated_at TIMESTAMP,
+	PRIMARY KEY (user_id)
+);
+
+CREATE TABLE transaksi (
+	transaksi_id VARCHAR (20) NOT NULL,
+	transaksi_no VARCHAR (20) NOT NULL,
+	transaksi_tangal VARCHAR (20) NOT NULL,
+	transaksi_status VARCHAR (20) NOT NULL,
+	updated_at TIMESTAMP,
+	PRIMARY KEY (transaksi_id)
+);
+
+CREATE TABLE hotel (
+    hotel_id VARCHAR(20) NOT NULL,
+    hotel_nama VARCHAR(20) NOT NULL,
+    hotel_alamat VARCHAR(20) NOT NULL,
+    updated_at TIMESTAMP,
+	PRIMARY KEY (hotel_id)
+)
+CREATE TABLE objek (
+    objek_id VARCHAR(20) NOT NULL,
+    hotel_id VARCHAR(20) NOT NULL,
+    objek_nama VARCHAR(40) NOT NULL, 
+    objek_keterangan VARCHAR(40) NOT NULL, 
+    objek_jenis VARCHAR(40) NOT NULL, 
+    objek_foto VARCHAR(40) NOT NULL, 
+    objek_harga VARCHAR(40) NOT NULL, 
+    objek_status VARCHAR(40) NOT NULL, 
+    updated_at TIMESTAMP,
+	PRIMARY KEY (`objek_id`),
+    KEY `hotel_id` (`hotel_id`),
+    CONSTRAINT `objek_ibfk_1` FOREIGN KEY (`hotel_id`) REFERENCES `hotel` (`hotel_id`)
+)
+
+CREATE TABLE cart (
+  cart_id varchar(4) NOT NULL,
+  user_id varchar(4) DEFAULT NULL,
+  transaksi_id varchar(4) DEFAULT NULL,
+  objek_id varchar(4) DEFAULT NULL,
+  tanggal_mulai date DEFAULT NULL,
+  tanggal_selesai date DEFAULT NULL,
+  update_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`cart_id`),
+  KEY `user_id` (`user_id`),
+  KEY `transaksi_id` (`transaksi_id`),
+  KEY `objek_id` (`objek_id`),
+  CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`),
+  CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`transaksi_id`) REFERENCES `transaksi` (`transaksi_id`),
+  CONSTRAINT `cart_ibfk_3` FOREIGN KEY (`objek_id`) REFERENCES `objek` (`objek_id`)
+)
+
