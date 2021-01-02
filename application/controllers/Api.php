@@ -133,7 +133,7 @@ class Api extends RestController {
                     $this->response(
                         [
                             'status' => true,
-                            'result' => base_url()."assets/".$data['upload_data']['file_name']
+                            'result' => base_url('assets/').$data['upload_data']['file_name']
                         ]
                     );
             }
