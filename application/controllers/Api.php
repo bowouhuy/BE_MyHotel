@@ -18,7 +18,7 @@ class Api extends RestController {
     }
 
     public function login_post(){
-        
+
         $email = $this->post('user_mail');
         $password = $this->post('user_password');
         $where = array(
@@ -79,7 +79,8 @@ class Api extends RestController {
     public function objek_get(){
         $objek_nama = $this->input->get('objek_nama');
         $objek_jenis = $this->input->get('objek_jenis');
-
+        $objek_id = $this->input->get('objek_id');
+        
         $nama = empty($objek_nama) ? '%' : $objek_nama;
         $jenis = empty($objek_jenis) ? '%' : $objek_jenis;
         $where= array(
@@ -87,7 +88,7 @@ class Api extends RestController {
             'objek_jenis' => $jenis
         );
 
-        $response = $this->Objek->list($where);
+        $response = $this->Objek->list($where, $objek_id);
         
 
         if($response){
