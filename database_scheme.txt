@@ -45,6 +45,7 @@ CREATE TABLE cart (
   user_id varchar(4) DEFAULT NULL,
   transaksi_id varchar(4) DEFAULT NULL,
   objek_id varchar(4) DEFAULT NULL,
+  cart_harga INT(60) DEFAULT NULL,
   tanggal_mulai date DEFAULT NULL,
   tanggal_selesai date DEFAULT NULL,
   update_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,

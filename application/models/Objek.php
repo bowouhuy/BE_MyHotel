@@ -24,8 +24,6 @@ Class Objek extends CI_Model {
         if(! $this->db->insert('objek', $data)){
             
             return $this->db->error();
-        }else{
-            return "success";
         }
     }
 

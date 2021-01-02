@@ -12,6 +12,7 @@ class Api extends RestController {
         parent::__construct();
         $this->load->model('Users');
         $this->load->model('Objek');
+        $this->load->model('Cart');
         Header('Access-Control-Allow-Origin: *'); //for allow any domain, insecure
         Header('Access-Control-Allow-Headers: *'); //for allow any headers, insecure
         Header('Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE'); //method allowed
@@ -162,6 +163,52 @@ class Api extends RestController {
                 );
             }    
         }
+    }
+
+    public function cart_post(){
+        $user = $this->post('user_id');
+        $objek = $this->post('objek_id');
+        $harga = $this->post('objek_harga');
+        $s = $this->post('tanggal_mulai');
+        $e =$this->post('tanggal_selesai');
+        $start = new DateTime($s);
+        $end = new DateTime($e);
+        $cart_harga = ($end->diff($start)->format("%a")) * $harga;
+        $data = array(
+            'user_id' => $user,
+            'objek_id' => $objek,
+            'cart_harga' => $cart_harga,
+            'tanggal_mulai' => $s,
+            'tanggal_selesai' => $e
+        );
+        $response = $this->Cart->add($data);
+        
+        if($response == null){
+            $this->response(
+                [
+                    'status' => true,
+                    'result' => "Success"
+                ], 200
+            );
+        }else{
+            $this->response(
+                [
+                    'status' => false,
+                    'result' => $response
+                ], 200
+            );
+        }
+    }
+
+    public function cart_get(){
+        $id = $this->input->get('cart_id');
+        $response = $this->Cart->getCartbyId($id)->row_array();
+        $this->response(
+            [
+                'status' => true,
+                'result' => $response
+            ]
+            );
     }
 
 }
