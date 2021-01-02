@@ -10,7 +10,7 @@ Class Users extends CI_Model {
     public function register($data){
         if(! $this->db->insert('users', $data)){
             
-            return $this->db->error();;
+            return $this->db->error();
         }
     }
 

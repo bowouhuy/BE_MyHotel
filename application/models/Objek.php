@@ -14,5 +14,15 @@ Class Objek extends CI_Model {
             return $result;
     }
 
+    public function addObjek($data){
+        // print_r($data);exit;
+        if(! $this->db->insert('objek', $data)){
+            
+            return $this->db->error();
+        }else{
+            return "success";
+        }
+    }
+
 
 }

@@ -18,14 +18,14 @@ class Api extends RestController {
     }
 
     public function login_post(){
-        // print_r($this->input->raw_input_stream);exit;
+        
         $email = $this->post('user_mail');
         $password = $this->post('user_password');
         $where = array(
             'user_mail' => $email,
             'user_password' => md5($password)
             );
-        // print_r($where);exit;
+
         $result = $this->Users->login($where)->row_array();
         if($result != null){
             
@@ -86,7 +86,7 @@ class Api extends RestController {
             'objek_nama' => $nama,
             'objek_jenis' => $jenis
         );
-        // print_r($where['objek_nama']);exit;
+
         $response = $this->Objek->list($where);
         
 
@@ -108,6 +108,13 @@ class Api extends RestController {
     }
 
     public function add_post(){
+        $hotel = $this->post('hotel_id');
+        $nama = $this->post('objek_nama');
+        $keterangan = $this->post('objek_keterangan');
+        $jenis = $this->post('objek_jenis');
+        $harga = $this->post('objek_harga');
+        $status = "available";
+        
         $config['upload_path']          = './assets';
         $config['allowed_types']        = 'gif|jpg|png';
         $config['max_size']             = 100000;
@@ -116,27 +123,44 @@ class Api extends RestController {
         $filename = $this->post('file');
         
         $this->load->library('upload', $config);
-
+        
         if ( ! $this->upload->do_upload('file'))
-            {
-                    $error = array('error' => $this->upload->display_errors());
-                    $this->response(
-                        [
-                            'status' => false,
-                            'result' => $error
-                        ]
-                    );
-            }
-            else
-            {
-                    $data = array('upload_data' => $this->upload->data());
-                    $this->response(
-                        [
-                            'status' => true,
-                            'result' => base_url('assets/').$data['upload_data']['file_name']
-                        ]
-                    );
-            }
+        {
+            $error = array('error' => $this->upload->display_errors());
+            $this->response(
+                [
+                'status' => false,
+                'result' => $error
+                ]
+            );
+        }else{  
+            $upload_data = array('upload_data' => $this->upload->data());
+            $data = array(
+                'hotel_id' => $hotel,
+                'objek_nama' => $nama,
+                'objek_keterangan' => $keterangan,
+                'objek_jenis' => $jenis,
+                'objek_foto' => base_url('assets/').$upload_data['upload_data']['file_name'],
+                'objek_harga' => $harga,
+                'objek_status' => $status
+            );
+            $response = $this->Objek->addObjek($data);
+            if($response == null){
+                $this->response(
+                    [
+                        'status' => true,
+                        'result' => "Success"
+                    ], 200
+                );
+            }else{
+                $this->response(
+                    [
+                        'status' => false,
+                        'result' => $response
+                    ], 200
+                );
+            }    
+        }
     }
 
 }
