@@ -77,13 +77,18 @@ class Api extends RestController {
     }
 
     public function objek_get(){
-        $objek = $this->input->get('objek');
+        $objek_nama = $this->input->get('objek_nama');
+        $objek_jenis = $this->input->get('objek_jenis');
 
-        if($objek === null){
-            $response = $this->Objek->list();
-        }else{
-            $response = $this->Objek->list($objek);
-        }
+        $nama = empty($objek_nama) ? '%' : $objek_nama;
+        $jenis = empty($objek_jenis) ? '%' : $objek_jenis;
+        $where= array(
+            'objek_nama' => $nama,
+            'objek_jenis' => $jenis
+        );
+        // print_r($where['objek_nama']);exit;
+        $response = $this->Objek->list($where);
+        
 
         if($response){
             $this->response(
@@ -100,6 +105,38 @@ class Api extends RestController {
                 ]
             );
         }
+    }
+
+    public function add_post(){
+        $config['upload_path']          = './assets';
+        $config['allowed_types']        = 'gif|jpg|png';
+        $config['max_size']             = 100000;
+        $config['max_width']            = 2048;
+        $config['max_height']           = 1586;
+        $filename = $this->post('file');
+        
+        $this->load->library('upload', $config);
+
+        if ( ! $this->upload->do_upload('file'))
+            {
+                    $error = array('error' => $this->upload->display_errors());
+                    $this->response(
+                        [
+                            'status' => false,
+                            'result' => $error
+                        ]
+                    );
+            }
+            else
+            {
+                    $data = array('upload_data' => $this->upload->data());
+                    $this->response(
+                        [
+                            'status' => true,
+                            'result' => base_url()."assets/".$data['upload_data']['file_name']
+                        ]
+                    );
+            }
     }
 
 }
