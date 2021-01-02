@@ -10,17 +10,8 @@ Class Users extends CI_Model {
     public function register($data){
         if(! $this->db->insert('users', $data)){
             
-            $data = array(
-                'affected_row' => $this->db->affected_rows(),
-                'status' => $this->db->error()
-            );
-            return $data;
+            return $this->db->error();;
         }
-        $data = array(
-            'affected_row' => $this->db->affected_rows(),
-            'status' => "Successfully"
-        );
-        return $data;
     }
 
 }

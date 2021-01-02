@@ -54,7 +54,6 @@ class Api extends RestController {
         $role = $this->input->post('role');
 
         $data = array(
-            'user_id' => $id,
             'user_nama' => $nama,
             'user_mail' => $email,
             'user_password' => md5($password),
@@ -62,39 +61,48 @@ class Api extends RestController {
         );
 
         $response = $this->Users->register($data);
+        
+        if($response == null){
             $this->response(
                 [
                     'status' => true,
+                    'result' => "Success"
+                ], 200
+            );
+        }else{
+            $this->response(
+                [
+                    'status' => false,
                     'result' => $response
                 ], 200
             );
-        
+        }
     }
 
     public function objek_get(){
         $objek = $this->input->get('objek');
 
-            if($objek === null){
-                $response = $this->Objek->list();
-            }else{
-                $response = $this->Objek->list($objek);
+        if($objek === null){
+            $response = $this->Objek->list();
+        }else{
+            $response = $this->Objek->list($objek);
+        }
 
-            }
-            if($response){
-                    $this->response(
-                        [
-                            'status' => true,
-                            'result' => $response
-                        ]
-                    );
-                }else{
-                    $this->response(
-                        [
-                            'status' => false,
-                            'result' => "No Objek Found"
-                        ]
-                    );
-                    }
+        if($response){
+            $this->response(
+                [
+                    'status' => true,
+                    'result' => $response
+                ]
+            );
+        }else{
+            $this->response(
+                [
+                    'status' => false,
+                    'result' => "No Objek Found"
+                ]
+            );
+        }
     }
 
 }
