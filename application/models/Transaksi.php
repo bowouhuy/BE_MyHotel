@@ -18,4 +18,14 @@ Class Transaksi extends CI_Model {
     
     }
 
+    public function getLastTransaksiId(){
+        $result = $this->db->query(
+                    "SELECT transaksi_id FROM transaksi 
+                     ORDER BY transaksi_id DESC
+                     LIMIT 1
+                    ");
+        return $result;
+    }
+
+
 }
