@@ -78,6 +78,27 @@ class Api extends RestController {
         }
     }
 
+    public function user_get(){
+        $user_id = $this->input->get('user_id');
+        $response = $this->Users->get_user($user_id)->row_array();
+        
+        if($response){
+            $this->response(
+                [
+                    'status' => true,
+                    'result' => $response
+                ]
+            );
+        }else{
+            $this->response(
+                [
+                    'status' => false,
+                    'result' => "No Objek Found"
+                ]
+            );
+        }
+    }
+
     public function objek_get(){
         $objek_nama = $this->input->get('objek_nama');
         $objek_jenis = $this->input->get('objek_jenis');

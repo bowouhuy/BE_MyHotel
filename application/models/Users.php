@@ -7,6 +7,10 @@ Class Users extends CI_Model {
         return $this->db->get_where('users',$where);
     }
 
+    public function get_user($user_id){
+        return $this->db->get_where('users',array('user_id' => $user_id));
+    }
+
     public function register($data){
         if(! $this->db->insert('users', $data)){
             
