@@ -204,17 +204,21 @@ class Api extends RestController {
     public function cart_get(){
         $id = $this->input->get('user_id');
         $response = $this->Cart->getCartbyId($id)->result_array();
+        
         $this->response(
             [
                 'status' => true,
                 'result' => $response
             ]
-            );
+        );
     }
 
     public function cartDelete_post(){
         $id = $this->post('cart_id');
+<<<<<<< HEAD
         print_r($id);exit;
+=======
+>>>>>>> decafec43c8760498e2b741ad32ee5d48b45839b
         $response = $this->Cart->destroy($id);
         if($response > 0){
             $this->response(
@@ -234,17 +238,29 @@ class Api extends RestController {
     }
 
     public function transaksi_post(){
+
+        $last_transaksi_id = $this->Transaksi->getLastTransaksiId()->row_array();
+        $transaksi_id = $last_transaksi_id['transaksi_id'];
+        
+        if (empty($last_transaksi_id)){
+            $transaksi_id = 1;
+        }
+        $no = date('dmY').$transaksi_id;
         $user = $this->post('user_id');
-        $no = $this->post('transaksi_no');
-        $date = $this->post('transaksi_tanggal');
-        $status = $this->post('transaksi_status');
+        $transaksi_harga = $this->post('transaksi_harga');
+        $date = date('Y-m-d');
+        $status = 'waiting';
+    
         $data = array(
             'transaksi_no' => $no,
+<<<<<<< HEAD
             'user_id' => $user,
+=======
+            'transaksi_harga' => $transaksi_harga,
+>>>>>>> decafec43c8760498e2b741ad32ee5d48b45839b
             'transaksi_tanggal' => $date,
             'transaksi_status' => $status
         );
-
         $response = $this->Transaksi->add($data);
         $query = $this->Transaksi->getTransaksibyNo($no)->row_array();
         $addTransaksiId = $this->Cart->addTransaksiId($query['transaksi_id'], $user);
