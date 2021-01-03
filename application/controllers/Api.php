@@ -212,8 +212,8 @@ class Api extends RestController {
             );
     }
 
-    public function cart_delete(){
-        $id = $this->delete('cart_id');
+    public function cartDelete_post(){
+        $id = $this->post('cart_id');
         print_r($id);exit;
         $response = $this->Cart->destroy($id);
         if($response > 0){
@@ -240,6 +240,7 @@ class Api extends RestController {
         $status = $this->post('transaksi_status');
         $data = array(
             'transaksi_no' => $no,
+            'user_id' => $user,
             'transaksi_tanggal' => $date,
             'transaksi_status' => $status
         );
@@ -260,6 +261,27 @@ class Api extends RestController {
                 [
                     'status' => false,
                     'result' => $response
+                ]
+            );
+        }
+    }
+
+    public function transaksi_get(){
+        $user = $this->get('user_id');
+        $response = $this->Transaksi->getbyUserId($user)->result_array();
+
+        if($response){
+            $this->response(
+                [
+                    'status' =>true,
+                    'result' => $response
+                ]
+            );
+        }else{
+            $this->response(
+                [
+                    'status' =>false,
+                    'result' => "User id Not Found"
                 ]
             );
         }

@@ -18,4 +18,8 @@ Class Transaksi extends CI_Model {
     
     }
 
+    public function getbyUserId($user_id){
+        return $this->db->get_where('transaksi', array( 'user_id' => $user_id));
+    }
+
 }
