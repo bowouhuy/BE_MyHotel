@@ -23,6 +23,9 @@ Class Cart extends CI_Model {
     }
 
     public function destroy($id){
-        $this->db->delete('cart', array('cart_id' => $id));
+        if(! $this->db->delete('cart', array('cart_id' => $id))) {
+            return $this->db->error();
+        }
+            return $this->db->affected_rows();
     }
 }

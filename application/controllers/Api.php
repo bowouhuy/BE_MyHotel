@@ -110,7 +110,7 @@ class Api extends RestController {
         }
     }
 
-    public function add_post(){
+    public function addObjek_post(){
         $hotel = $this->post('hotel_id');
         $nama = $this->post('objek_nama');
         $keterangan = $this->post('objek_keterangan');
@@ -210,6 +210,26 @@ class Api extends RestController {
                 'result' => $response
             ]
             );
+    }
+
+    public function cart_delete(){
+        $id = $this->delete('cart_id');
+        $response = $this->Cart->destroy($id);
+        if($response > 0){
+            $this->response(
+                [
+                    'status' => true,
+                    'result' => "Success Delete"
+                ]
+            );
+        }else{
+            $this->response(
+                [
+                    'status' => false,
+                    'result' => "Id Not Found"
+                ]
+            );
+        }
     }
 
     public function transaksi_post(){
