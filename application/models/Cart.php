@@ -10,7 +10,7 @@ Class Cart extends CI_Model {
     }
 
     public function getCartbyId($id){
-        return $this->db->get_where('cart', array('user_id' => $id));
+        return $this->db->get_where('cart', array('user_id' => $id, 'transaksi_id' => null));
         
     }
 
@@ -20,5 +20,9 @@ Class Cart extends CI_Model {
         if(! $this->db->update('cart'))  {
             return $this->db->error();
         }
+    }
+
+    public function destroy($id){
+        $this->db->delete('cart', array('cart_id' => $id));
     }
 }

@@ -27,5 +27,9 @@ Class Objek extends CI_Model {
         }
     }
 
+    public function destroy($id){
+        $this->db->delete('objek', array('objek_id' => $id));
+    }
+
 
 }
