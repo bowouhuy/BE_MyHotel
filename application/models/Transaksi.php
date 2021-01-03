@@ -31,5 +31,15 @@ Class Transaksi extends CI_Model {
         return $result;
     }
 
+    public function updateSt($where){
+        $this->db->set('transaksi_status', $where['transaksi_status']);
+        $this->db->where('transaksi_id', $where['transaksi_id']);
+
+        if(! $this->db->update('transaksi')){
+            return "Success";
+        }
+        return $this->db->affected_rows();
+    }
+
 
 }

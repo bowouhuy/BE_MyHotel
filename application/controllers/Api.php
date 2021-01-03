@@ -296,4 +296,31 @@ class Api extends RestController {
         }
     }
 
+    public function transaksiUpdateSt_post(){
+        $id = $this->post('transaksi_id');
+        $status = $this->post('transaksi_status');
+        $where = array(
+            'transaksi_id' => $id,
+            'transaksi_status' =>$status
+        );
+
+        $response = $this->Transaksi->updateSt($where);
+        
+        if($response > 0){
+            $this->response(
+                [
+                    'status' => true,
+                    'result' => "Success Update"
+                ]
+            );
+        }else{
+            $this->response(
+                [
+                    'status' => false,
+                    'result' => "Id Not Found / No one Change"
+                ]
+            );
+        }
+    }
+        
 }
