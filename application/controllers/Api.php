@@ -215,10 +215,6 @@ class Api extends RestController {
 
     public function cartDelete_post(){
         $id = $this->post('cart_id');
-<<<<<<< HEAD
-        print_r($id);exit;
-=======
->>>>>>> decafec43c8760498e2b741ad32ee5d48b45839b
         $response = $this->Cart->destroy($id);
         if($response > 0){
             $this->response(
@@ -253,11 +249,8 @@ class Api extends RestController {
     
         $data = array(
             'transaksi_no' => $no,
-<<<<<<< HEAD
             'user_id' => $user,
-=======
             'transaksi_harga' => $transaksi_harga,
->>>>>>> decafec43c8760498e2b741ad32ee5d48b45839b
             'transaksi_tanggal' => $date,
             'transaksi_status' => $status
         );

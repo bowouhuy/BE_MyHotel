@@ -18,12 +18,10 @@ Class Transaksi extends CI_Model {
     
     }
 
-<<<<<<< HEAD
     public function getbyUserId($user_id){
         return $this->db->get_where('transaksi', array( 'user_id' => $user_id));
     }
 
-=======
     public function getLastTransaksiId(){
         $result = $this->db->query(
                     "SELECT transaksi_id FROM transaksi 
@@ -34,5 +32,4 @@ Class Transaksi extends CI_Model {
     }
 
 
->>>>>>> decafec43c8760498e2b741ad32ee5d48b45839b
 }
