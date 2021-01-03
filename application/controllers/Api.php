@@ -13,6 +13,7 @@ class Api extends RestController {
         $this->load->model('Users');
         $this->load->model('Objek');
         $this->load->model('Cart');
+        $this->load->model('Transaksi');
         Header('Access-Control-Allow-Origin: *'); //for allow any domain, insecure
         Header('Access-Control-Allow-Headers: *'); //for allow any headers, insecure
         Header('Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE'); //method allowed
@@ -201,14 +202,46 @@ class Api extends RestController {
     }
 
     public function cart_get(){
-        $id = $this->input->get('cart_id');
-        $response = $this->Cart->getCartbyId($id)->row_array();
+        $id = $this->input->get('user_id');
+        $response = $this->Cart->getCartbyId($id)->result_array();
         $this->response(
             [
                 'status' => true,
                 'result' => $response
             ]
             );
+    }
+
+    public function transaksi_post(){
+        $user = $this->post('user_id');
+        $no = $this->post('transaksi_no');
+        $date = $this->post('transaksi_tanggal');
+        $status = $this->post('transaksi_status');
+        $data = array(
+            'transaksi_no' => $no,
+            'transaksi_tanggal' => $date,
+            'transaksi_status' => $status
+        );
+
+        $response = $this->Transaksi->add($data);
+        $query = $this->Transaksi->getTransaksibyNo($no)->row_array();
+        $addTransaksiId = $this->Cart->addTransaksiId($query['transaksi_id'], $user);
+
+        if($response == null && $addTransaksiId == null){
+            $this->response(
+                [
+                    'status' => true,
+                    'result' => "Success"
+                ]
+            );
+        }else{
+            $this->response(
+                [
+                    'status' => false,
+                    'result' => $response
+                ]
+            );
+        }
     }
 
 }
