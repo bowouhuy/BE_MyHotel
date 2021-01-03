@@ -214,6 +214,7 @@ class Api extends RestController {
 
     public function cart_delete(){
         $id = $this->delete('cart_id');
+        print_r($id);exit;
         $response = $this->Cart->destroy($id);
         if($response > 0){
             $this->response(

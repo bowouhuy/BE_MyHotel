@@ -10,8 +10,11 @@ Class Cart extends CI_Model {
     }
 
     public function getCartbyId($id){
-        return $this->db->get_where('cart', array('user_id' => $id, 'transaksi_id' => null));
-        
+        $result = $this->db->query("SELECT * FROM cart 
+                        LEFT JOIN objek ON cart.objek_id = objek.objek_id 
+                        WHERE cart.user_id = '$id' AND cart.transaksi_id IS NULL");
+        // return $this->db->get_where('cart', array('user_id' => $id, 'transaksi_id' => null));
+        return $result;
     }
 
     public function addTransaksiId($id, $user){
