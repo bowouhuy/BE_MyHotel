@@ -131,62 +131,6 @@ class Api extends RestController {
         }
     }
 
-    public function addObjek_post(){
-        $hotel = $this->post('hotel_id');
-        $nama = $this->post('objek_nama');
-        $keterangan = $this->post('objek_keterangan');
-        $jenis = $this->post('objek_jenis');
-        $harga = $this->post('objek_harga');
-        $status = "available";
-        
-        $config['upload_path']          = './assets';
-        $config['allowed_types']        = 'gif|jpg|png';
-        $config['max_size']             = 100000;
-        $config['max_width']            = 2048;
-        $config['max_height']           = 1586;
-        $filename = $this->post('file');
-        
-        $this->load->library('upload', $config);
-        
-        if ( ! $this->upload->do_upload('file'))
-        {
-            $error = array('error' => $this->upload->display_errors());
-            $this->response(
-                [
-                'status' => false,
-                'result' => $error
-                ]
-            );
-        }else{  
-            $upload_data = array('upload_data' => $this->upload->data());
-            $data = array(
-                'hotel_id' => $hotel,
-                'objek_nama' => $nama,
-                'objek_keterangan' => $keterangan,
-                'objek_jenis' => $jenis,
-                'objek_foto' => base_url('assets/').$upload_data['upload_data']['file_name'],
-                'objek_harga' => $harga,
-                'objek_status' => $status
-            );
-            $response = $this->Objek->addObjek($data);
-            if($response == null){
-                $this->response(
-                    [
-                        'status' => true,
-                        'result' => "Success"
-                    ], 200
-                );
-            }else{
-                $this->response(
-                    [
-                        'status' => false,
-                        'result' => $response
-                    ], 200
-                );
-            }    
-        }
-    }
-
     public function cart_post(){
         $user = $this->post('user_id');
         $objek = $this->post('objek_id');

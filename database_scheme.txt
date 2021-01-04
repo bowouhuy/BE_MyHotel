@@ -1,4 +1,4 @@
-CREATE TABLE user(
+CREATE TABLE users(
 	user_id VARCHAR (20) NOT NULL,
 	user_nama VARCHAR (50) NOT NULL,
 	user_mail VARCHAR(100) NOT NULL,
@@ -11,7 +11,9 @@ CREATE TABLE user(
 
 CREATE TABLE transaksi (
 	transaksi_id VARCHAR (20) NOT NULL,
+    user_id VARCHAR (20) NOT NULL,
 	transaksi_no VARCHAR (20) NOT NULL,
+    transaksi_harga INT (20) NOT NULL,
 	transaksi_tangal VARCHAR (20) NOT NULL,
 	transaksi_status VARCHAR (20) NOT NULL,
 	updated_at TIMESTAMP,
@@ -36,8 +38,7 @@ CREATE TABLE objek (
     objek_status VARCHAR(40) NOT NULL, 
     updated_at TIMESTAMP,
 	PRIMARY KEY (`objek_id`),
-    KEY `hotel_id` (`hotel_id`),
-    CONSTRAINT `objek_ibfk_1` FOREIGN KEY (`hotel_id`) REFERENCES `hotel` (`hotel_id`)
+    KEY `hotel_id` (`hotel_id`)
 )
 
 CREATE TABLE cart (
@@ -52,10 +53,7 @@ CREATE TABLE cart (
   PRIMARY KEY (`cart_id`),
   KEY `user_id` (`user_id`),
   KEY `transaksi_id` (`transaksi_id`),
-  KEY `objek_id` (`objek_id`),
-  CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`),
-  CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`transaksi_id`) REFERENCES `transaksi` (`transaksi_id`),
-  CONSTRAINT `cart_ibfk_3` FOREIGN KEY (`objek_id`) REFERENCES `objek` (`objek_id`)
+  KEY `objek_id` (`objek_id`)
 )
 
 //
