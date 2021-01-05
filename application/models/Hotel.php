@@ -19,17 +19,6 @@ Class Hotel extends CI_Model{
         return $result;
     }
 
-    public function edit(){
-        $data = array(
-            'title' => $title,
-            'name' => $name,
-            'date' => $date
-    );
-    
-    $this->db->where('id', $id);
-    $this->db->update('mytable', $data);
-    }
-
     public function editHotel($data){
         $this->db->set($data);
         $this->db->where('hotel_id', $data['hotel_id']);

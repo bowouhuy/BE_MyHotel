@@ -9,8 +9,15 @@ Class Transaksi extends CI_Model {
         }
     }
 
-    public function getAll(){
-        $this->db->get('transaksi');
+    public function getAll($id){
+        if($id != null) {
+            $result = $this->db->get_where('transaksi', array( 'transaksi_id' => $id))->row_array();
+        }else{
+
+            $result = $this->db->get('transaksi')->result_array();
+        }
+
+        return $result;
     }
 
     public function getTransaksibyNo($no){
