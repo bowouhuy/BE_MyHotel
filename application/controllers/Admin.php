@@ -256,9 +256,9 @@ class Admin extends RestController {
             ]
             );
     }
-    public function totalCart_get(){
+    public function totalObjek_get(){
 
-        $response = $this->Cart->countAll();
+        $response = $this->Objek->countAll();
         $this->response(
             [
                 'status' => true,
