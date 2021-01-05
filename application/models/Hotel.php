@@ -9,4 +9,9 @@ Class Hotel extends CI_Model{
         }
     }
 
+    public function list(){
+        $result = $this->db->query("SELECT * FROM hotel")->result_array();
+                        
+        return $result;
+    }
 }

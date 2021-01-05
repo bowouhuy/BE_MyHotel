@@ -102,4 +102,44 @@ class Admin extends RestController {
             }    
         }
     }
+
+    public function hotel_get(){
+        $response = $this->Hotel->list();
+        
+        if($response){
+            $this->response(
+                [
+                    'status' => true,
+                    'result' => $response
+                ]
+            );
+        }else{
+            $this->response(
+                [
+                    'status' => false,
+                    'result' => "No Objek Found"
+                ]
+            );
+        }
+    }
+
+    public function objekDelete_post(){
+        $id = $this->post('objek_id');
+        $response = $this->Objek->destroy($id);
+        if($response > 0){
+            $this->response(
+                [
+                    'status' => true,
+                    'result' => "Success Delete"
+                ]
+            );
+        }else{
+            $this->response(
+                [
+                    'status' => false,
+                    'result' => "Id Not Found"
+                ]
+            );
+        }
+    }
 }
