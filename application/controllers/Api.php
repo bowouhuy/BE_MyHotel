@@ -243,11 +243,13 @@ class Api extends RestController {
     public function transaksi_get(){
         $user = $this->get('user_id');
         $id = $this->get('transaksi_id');
-
+        $user_nama = $this->input->get('user_nama');
+        
+        $nama = empty($user_nama) ? '%' : $user_nama;
         if($user){
             $response = $this->Transaksi->getbyUserId($user)->result_array();
         }else{
-            $response = $this->Transaksi->getAll($id);
+            $response = $this->Transaksi->getAll($id,$nama);
         }
 
         if($response){

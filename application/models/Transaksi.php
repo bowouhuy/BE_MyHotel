@@ -9,14 +9,22 @@ Class Transaksi extends CI_Model {
         }
     }
 
-    public function getAll($id){
+    public function getAll($id, $nama){
         if($id != null) {
             $result = $this->db->get_where('transaksi', array( 'transaksi_id' => $id))->row_array();
         }else{
 
             // $result = $this->db->get('transaksi')->result_array();
             $result = $this->db->query("SELECT * FROM transaksi 
-                        LEFT JOIN users ON transaksi.user_id = users.user_id")->result_array();
+                        INNER JOIN users ON transaksi.user_id = users.user_id
+                        LEFT JOIN (
+                            SELECT transaksi_id, GROUP_CONCAT(DISTINCT objek_nama SEPARATOR ', ') AS room
+                            FROM cart
+                            LEFT JOIN objek ON cart.objek_id = objek.objek_id
+                            GROUP BY transaksi_id
+                        )a ON transaksi.transaksi_id = a.transaksi_id
+                        WHERE user_nama LIKE '%$nama%'
+                        ")->result_array();
         }
         return $result;
     }
