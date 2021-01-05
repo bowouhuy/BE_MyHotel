@@ -30,6 +30,15 @@ Class Objek extends CI_Model {
     public function destroy($id){
         $this->db->delete('objek', array('objek_id' => $id));
     }
+    
+
+    public function editObjek($data){
+        $this->db->set($data);
+        $this->db->where('objek_id', $data['objek_id']);
+        if (! $this->db->update('objek')){
+            return $this->db->error();
+        }
+    }
 
 
 }

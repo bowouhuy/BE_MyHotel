@@ -104,7 +104,9 @@ class Admin extends RestController {
     }
 
     public function hotel_get(){
-        $response = $this->Hotel->list();
+        $id = $this->input->get('hotel_id');
+        // print_r($id);exit;
+        $response = $this->Hotel->list($id);
         
         if($response){
             $this->response(
@@ -142,4 +144,85 @@ class Admin extends RestController {
             );
         }
     }
+
+    public function editObjek_post(){
+        $id = $this->post('objek_id');
+        $nama = $this->post('objek_nama');
+        $keterangan = $this->post('objek_keterangan');
+        $harga = $this->post('objek_harga');
+        $path_foto=$this->post('path_foto');
+        $config['upload_path']          = './assets';
+        $config['allowed_types']        = 'gif|jpg|png';
+        $config['max_size']             = 100000;
+        $config['max_width']            = 2048;
+        $config['max_height']           = 1586;
+        $filename = $this->post('file');
+        
+        $this->load->library('upload', $config);
+        $this->upload->do_upload('file');
+     
+        $upload_data = $this->upload->data();
+        // print_r($upload_data['file_name']);exit;
+        if($upload_data['file_name']){
+            $foto = base_url('assets/').$upload_data['file_name'];
+        }else{
+            $foto = $path_foto;
+        }
+        $data = array(
+            'objek_id' => $id,
+            'objek_nama' => $nama,
+            'objek_keterangan' => $keterangan,
+            'objek_harga' => $harga,
+            'objek_foto' => $foto
+        );
+        // print_r($data);exit;
+
+        $response = $this->Objek->editObjek($data);
+        if(! $response){
+            $this->response(
+                [
+                    'status' => true,
+                    'result' => "Success"
+                ]
+            );
+        }else{
+            $this->response(
+                [
+                    'status' => false,
+                    'result' => $response
+                ]
+            );
+        }
+            
+        }
+        
+        public function editHotel_post(){
+        $id = $this->post('hotel_id');
+        $nama = $this->post('hotel_nama');
+        $alamat = $this->post('hotel_alamat');
+        $data = array(
+            'hotel_id' => $id,
+            'hotel_nama' => $nama,
+            'hotel_alamat' => $alamat,
+        );
+
+        $response = $this->Hotel->editHotel($data);
+        if(! $response){
+            $this->response(
+                [
+                    'status' => true,
+                    'result' => "Success"
+                ]
+            );
+        }else{
+            $this->response(
+                [
+                    'status' => false,
+                    'result' => $response
+                ]
+            );
+        }
+        
+    }
+
 }
