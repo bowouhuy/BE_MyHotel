@@ -14,9 +14,10 @@ Class Transaksi extends CI_Model {
             $result = $this->db->get_where('transaksi', array( 'transaksi_id' => $id))->row_array();
         }else{
 
-            $result = $this->db->get('transaksi')->result_array();
+            // $result = $this->db->get('transaksi')->result_array();
+            $result = $this->db->query("SELECT * FROM transaksi 
+                        LEFT JOIN users ON transaksi.user_id = users.user_id")->result_array();
         }
-
         return $result;
     }
 

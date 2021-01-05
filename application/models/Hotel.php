@@ -31,4 +31,8 @@ Class Hotel extends CI_Model{
     public function countAll(){
         return $this->db->count_all_results('hotel');
     }
+
+    public function destroy($id){
+        $this->db->delete('hotel', array('hotel_id' => $id));
+    }
 }

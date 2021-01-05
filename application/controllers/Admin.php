@@ -267,4 +267,24 @@ class Admin extends RestController {
             );
     }
 
+    public function hotelDelete_post(){
+        $id = $this->post('hotel_id');
+        $response = $this->Hotel->destroy($id);
+        if($response > 0){
+            $this->response(
+                [
+                    'status' => true,
+                    'result' => "Success Delete"
+                ]
+            );
+        }else{
+            $this->response(
+                [
+                    'status' => false,
+                    'result' => "Id Not Found"
+                ]
+            );
+        }
+    }
+
 }
