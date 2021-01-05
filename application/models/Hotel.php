@@ -27,4 +27,8 @@ Class Hotel extends CI_Model{
         }
         
     }
+
+    public function countAll(){
+        return $this->db->count_all_results('hotel');
+    }
 }

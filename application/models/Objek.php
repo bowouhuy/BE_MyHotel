@@ -39,6 +39,10 @@ Class Objek extends CI_Model {
             return $this->db->error();
         }
     }
+    
+    public function countAll(){
+        return $this->db->count_all_results('objek');
+    }
 
 
 }

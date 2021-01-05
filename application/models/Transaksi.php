@@ -48,5 +48,9 @@ Class Transaksi extends CI_Model {
         return $this->db->affected_rows();
     }
 
+    public function countAll(){
+        return $this->db->count_all_results('transaksi');
+    }
+
 
 }

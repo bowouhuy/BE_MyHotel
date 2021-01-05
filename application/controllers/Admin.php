@@ -15,6 +15,7 @@ class Admin extends RestController {
         $this->load->model('Cart');
         $this->load->model('Transaksi');
         $this->load->model('Hotel');
+        $this->load->model('Users');
         Header('Access-Control-Allow-Origin: *'); //for allow any domain, insecure
         Header('Access-Control-Allow-Headers: *'); //for allow any headers, insecure
         Header('Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE'); //method allowed
@@ -223,6 +224,47 @@ class Admin extends RestController {
             );
         }
         
+    }
+
+    public function totalUser_get(){
+
+        $response = $this->Users->countAll();
+        $this->response(
+            [
+                'status' => true,
+                'result' => $response
+            ]
+            );
+    }
+    public function totalTransaksi_get(){
+
+        $response = $this->Transaksi->countAll();
+        $this->response(
+            [
+                'status' => true,
+                'result' => $response
+            ]
+            );
+    }
+    public function totalHotel_get(){
+
+        $response = $this->Hotel->countAll();
+        $this->response(
+            [
+                'status' => true,
+                'result' => $response
+            ]
+            );
+    }
+    public function totalCart_get(){
+
+        $response = $this->Cart->countAll();
+        $this->response(
+            [
+                'status' => true,
+                'result' => $response
+            ]
+            );
     }
 
 }
