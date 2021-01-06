@@ -206,7 +206,7 @@ class Api extends RestController {
         if (empty($last_transaksi_id)){
             $transaksi_id = 1;
         }
-        $no = date('dmY').$transaksi_id;
+        $no = date('mdY').$transaksi_id;
         $user = $this->post('user_id');
         $transaksi_harga = $this->post('transaksi_harga');
         $date = date('Y-m-d');

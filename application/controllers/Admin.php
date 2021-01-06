@@ -287,4 +287,15 @@ class Admin extends RestController {
         }
     }
 
+    public function chartDay_get(){
+        $response = $this->Transaksi->chartTransaksiDay();
+
+        $this->response(
+            $response
+            
+            );
+    }
+
+    
+
 }
