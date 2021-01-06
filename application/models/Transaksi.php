@@ -62,14 +62,20 @@ Class Transaksi extends CI_Model {
     }
 
     public function chartTransaksiDay(){
-        $day = date('md')."%";
-        $query = "SELECT COUNT(*) FROM transaksi
-        where transaksi_no like '.$day.'%'";
+        $day = date('d')+1-1;
+        $month = date('m');
+        $data =array();
+        for($i=0; $i<5; $i++){
+            $date = $month.$day."%";
+            $result = $this->db->query("SELECT COUNT(*) FROM transaksi
+            where transaksi_no like '$date'")->row_array();
 
-        $result = $this->db->query("SELECT COUNT(*) FROM transaksi
-        where transaksi_no like '$day'")->row();
-
-        return $result["COUNT(*)"];
+            $day=$day-1;
+            // $data[$i]=$result["COUNT(*)"];
+            $data[$i]=$result["COUNT(*)"];
+            // print_r($data);exit;
+        }
+        return $data;
     }
 
 
