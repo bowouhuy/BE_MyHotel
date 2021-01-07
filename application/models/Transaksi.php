@@ -62,20 +62,23 @@ Class Transaksi extends CI_Model {
     }
 
     public function chartTransaksiDay(){
-        $day = date('d')+1-1;
-        $month = date('m');
-        $data =array();
-        for($i=0; $i<5; $i++){
-            $date = $month.$day."%";
-            $result = $this->db->query("SELECT COUNT(*) FROM transaksi
-            where transaksi_no like '$date'")->row_array();
-
-            $day=$day-1;
-            // $data[$i]=$result["COUNT(*)"];
-            $data[$i]=$result["COUNT(*)"];
-            // print_r($data);exit;
+        $result = $this->db->query("SELECT SUM(transaksi_harga) AS total FROM transaksi
+                                    GROUP BY transaksi_tanggal
+                                    ORDER BY transaksi_tanggal ASC")->result_array();
+        foreach ($result as $key => $value) {
+            $array[$key] = $value['total'];
         }
-        return $data;
+        return $array;
+    }
+
+    public function chartTransaksiDayLabel(){
+        $result = $this->db->query("SELECT transaksi_tanggal AS day FROM transaksi
+                                    GROUP BY transaksi_tanggal
+                                    ORDER BY transaksi_tanggal ASC")->result_array();
+        foreach ($result as $key => $value) {
+            $array[$key] = $value['day'];
+        }
+        return $array;
     }
 
 

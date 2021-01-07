@@ -288,12 +288,15 @@ class Admin extends RestController {
     }
 
     public function chartDay_get(){
+        $label = $this->Transaksi->chartTransaksiDayLabel();
         $response = $this->Transaksi->chartTransaksiDay();
 
         $this->response(
-            $response
-            
-            );
+            [
+                'label' => $label,
+                'result' => $response
+            ]
+        );
     }
 
     
