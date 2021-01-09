@@ -13,15 +13,18 @@ class Sendmail extends CI_Controller {
         // Load library email dan konfigurasinya
         $this->load->library('email');
 
-        $config['protocol']     = 'smtp';
-        $config['smtp_host']    = 'smtp.gmail.com';
-        $config['smtp_port']    = '465';
-        $config['smtp_user']    = 'yoni.ss@excelindo.co.id';
-        $config['smtp_pass']    = 'semuabisa123';
-        $config['smtp_timeout'] = 20;
-        $config['mailtype']     = 'text';
-        $config['charset']      = 'iso-8859-1';
-        $config['wordwrap']     = TRUE;
+        $config = [
+            'mailtype'  => 'html',
+            'charset'   => 'utf-8',
+            'protocol'  => 'smtp',
+            'smtp_host' => 'smtp.gmail.com',
+            'smtp_user' => 'yoni.ss@excelindo.com',  // Email gmail
+            'smtp_pass'   => 'semuabisa123',  // Password gmail
+            'smtp_crypto' => 'ssl',
+            'smtp_port'   => 465,
+            'crlf'    => "\r\n",
+            'newline' => "\r\n"
+        ];
 
         $this->email->initialize($config);
         // Email dan nama pengirim

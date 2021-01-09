@@ -23,9 +23,11 @@ class Api extends RestController {
 
         $email = $this->post('user_mail');
         $password = $this->post('user_password');
+        $user_role = $this->post('user_role');
         $where = array(
             'user_mail' => $email,
-            'user_password' => md5($password)
+            'user_password' => md5($password),
+            'user_role' => $user_role
             );
 
         $result = $this->Users->login($where)->row_array();
