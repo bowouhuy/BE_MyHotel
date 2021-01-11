@@ -62,7 +62,7 @@ Class Transaksi extends CI_Model {
     }
 
     public function chartTransaksiDay(){
-        $result = $this->db->query("SELECT SUM(transaksi_harga) AS total FROM transaksi
+        $result = $this->db->query("SELECT SUM(transaksi_harga)/1000000 AS total FROM transaksi
                                     GROUP BY transaksi_tanggal
                                     ORDER BY transaksi_tanggal ASC")->result_array();
         foreach ($result as $key => $value) {
